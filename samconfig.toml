@@ -20,6 +20,7 @@ s3_prefix = "StickerImageConverter"
 region = "sa-east-1"
 disable_rollback = false
 image_repositories = []
+parameter_overrides = "Env=\"dev\""
 
 [default.package.parameters]
 resolve_s3 = true
