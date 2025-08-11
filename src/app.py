@@ -10,6 +10,9 @@ def lambda_handler(event, context):
         body = event.get('body')
         if body is None:
             raise ValueError("Request body is required")
+        if 'warmup' in body:
+            return respondWarmup()
+
 
         return convertImage(json.loads(event.get('body')).get('originalImageBase64'))
     except ValueError as ex:
@@ -43,6 +46,11 @@ def respondError(status_code, message):
             "status": status_code,
             "message": message
         })
+    }
+
+def respondWarmup():
+    return {
+        "statusCode": 200
     }
 
 

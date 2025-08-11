@@ -74,8 +74,12 @@ def test_lambda_function(apigw_event):
 
     base64_webp_image = base64.b64decode(body.get('webpImageBase64'))
     Image.open(BytesIO(base64_webp_image)).show()
-
     assert response is not None
+
+    response = app.lambda_handler({"body": "{warmup:true}"}, None)
+    assert response["statusCode"] == 200
+
+
 
 def test_lambda_function_invalid_base64():
     webp_image = app.lambda_handler({'abcs': ''}, {})
