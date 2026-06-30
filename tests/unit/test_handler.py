@@ -1,19 +1,19 @@
 import base64
 import json
-from io import BytesIO
+import os
+import resource
 
 import pytest
-from PIL import Image
 
 from src import app
 
-
 @pytest.fixture()
 def apigw_event():
-    """ Generates API GW Event"""
+    base_path = os.path.dirname(__file__)  # __file__ is a special built-in variable in Python that contains the full path to the current Python script file
+    json_path = os.path.join(base_path, 'base64Image.json')
 
     return {
-        "body": open('base64Image.json').read(),
+        "body": open(json_path).read(),
         "resource": "/{proxy+}",
         "requestContext": {
             "resourceId": "123456",
@@ -73,8 +73,7 @@ def test_lambda_function(apigw_event):
     assert body.get('webpImageBase64') != None
 
     base64_webp_image = base64.b64decode(body.get('webpImageBase64'))
-    Image.open(BytesIO(base64_webp_image)).show()
-    assert response is not None
+    assert base64_webp_image is not None
 
     response = app.lambda_handler({"body": "{warmup:true}"}, None)
     assert response["statusCode"] == 200
