@@ -21,4 +21,10 @@ A API Gateway de prod aponta para o alias 'prod' deste projeto, então você pre
 Para saber qual versão foi subida em homolog ou para mostrar todos os alias, o comando é:
 `` aws lambda list-aliases --function-name StickerImageConverter``
 
+Caso o alias 'prod' não exista, é preciso rodar o comando:
+``aws lambda create-alias \
+    --function-name StickerVideoConverter \
+    --name prod \
+    --function-version 5``
+
 
