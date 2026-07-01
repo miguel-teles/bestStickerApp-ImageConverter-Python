@@ -10,7 +10,7 @@ def lambda_handler(event, context):
         body = event.get('body')
         if body is None:
             raise ValueError("Request body is required")
-        if 'warmup' in body:
+        if 'warmer' in body:
             return respondWarmup()
 
 
